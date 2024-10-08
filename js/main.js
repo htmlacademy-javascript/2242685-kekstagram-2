@@ -72,7 +72,7 @@ function getMessage () { // одно или два случайных предл
 }
 
 function getComments () {
-  const commentsCount = getRandomInteger (0, 30);
+  const commentsCount = getRandomInteger (0, 30); // Количество комментариев к каждой фотографии — случайное число от 0 до 30.
   let commentsArray = [];
   for (let j = 0; j <= commentsCount - 1; j++) {
     commentsArray[j] = {
@@ -83,12 +83,12 @@ function getComments () {
     }
   }
   return commentsArray;
- }
+}
 
 let photosData = [];
 for (let i = 1; i <= NUMBER_OF_PHOTOS; i++) {
   photosData[i - 1] = {
-    id: i, // уникальный идентификатор фотографии (от 1 до NUMBER_OF_PHOTO_DESCRIPTIONS)
+    id: i, // уникальный идентификатор фотографии (от 1 до NUMBER_OF_PHOTOS)
     url: 'photos/' + i +'.jpg', // адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
     description: PHOTOS_DESCRIPTIONS[i - 1],
     likes: getRandomInteger(15, 200), // количество лайков, поставленных фотографии. Случайное число от 15 до 200.
