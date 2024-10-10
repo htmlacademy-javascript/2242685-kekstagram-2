@@ -77,7 +77,7 @@ function getComments () {
   for (let j = 0; j <= commentsCount - 1; j++) {
     commentsArray[j] = {
       id: j + 1, // любое число. Идентификаторы не должны повторяться.
-      avatar: 'img/avatar-' + getRandomInteger(1, 6) + '.svg', // img/avatar-{{случайное число от 1 до 6}}.svg
+      avatar: 'img/avatar-' + getRandomInteger(1, 6).toString + '.svg', // img/avatar-{{случайное число от 1 до 6}}.svg
       message: getMessage(),
       name: NAMES[getRandomInteger(0, NAMES.length - 1)],
     };
@@ -89,7 +89,7 @@ const photosData = [];
 for (let i = 1; i <= NUMBER_OF_PHOTOS; i++) {
   photosData[i - 1] = {
     id: i, // уникальный идентификатор фотографии (от 1 до NUMBER_OF_PHOTOS)
-    url: 'photos/' + i + '.jpg', // адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
+    url: 'photos/' + i.toString + '.jpg', // адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
     description: PHOTOS_DESCRIPTIONS[i - 1],
     likes: getRandomInteger(15, 200), // количество лайков, поставленных фотографии. Случайное число от 15 до 200.
     comments: getComments(),
