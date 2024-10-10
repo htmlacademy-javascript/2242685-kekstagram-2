@@ -96,4 +96,4 @@ for (let i = 1; i <= NUMBER_OF_PHOTOS; i++) {
   };
   //console.log(photosData[i - 1].comments);
 }
-console.log(photosData);
+//console.log(photosData);
