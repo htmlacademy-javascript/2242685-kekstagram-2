@@ -77,7 +77,7 @@ function getComments () {
   for (let j = 0; j <= commentsCount - 1; j++) {
     commentsArray[j] = {
       id: j + 1, // любое число. Идентификаторы не должны повторяться.
-      avatar: `img/avatar-${getRandomInteger(1, 6)} .svg`, // img/avatar-{{случайное число от 1 до 6}}.svg
+      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`, // img/avatar-{{случайное число от 1 до 6}}.svg
       message: getMessage(),
       name: NAMES[getRandomInteger(0, NAMES.length - 1)],
     };
