@@ -11,8 +11,8 @@
 import {getPhotosData} from './data.js';
 const photosData = getPhotosData();
 
-let picturesContainer = document.querySelector('.pictures');
-let pictureTemplate = document.querySelector('#picture').content;
+const picturesContainer = document.querySelector('.pictures');
+const pictureTemplate = document.querySelector('#picture').content;
 const picturesFragment = document.createDocumentFragment();
 
 for (let i = 0; i < photosData.length; i++) {
