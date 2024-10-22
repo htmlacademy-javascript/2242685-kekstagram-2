@@ -1,4 +1,4 @@
-import {getRandomInteger} from './util.js';
+import {getRandomInteger} from './utils.js';
 
 const NUMBER_OF_PHOTOS = 25;
 const PHOTOS_DESCRIPTIONS = [ // описание фотографии (придумайте самостоятельно)
