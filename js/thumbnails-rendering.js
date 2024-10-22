@@ -1,7 +1,7 @@
 import {getPhotosData} from './data.js';
-const photosData = getPhotosData();
 
 function thumbnailsRendering () {
+  const photosData = getPhotosData();
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
