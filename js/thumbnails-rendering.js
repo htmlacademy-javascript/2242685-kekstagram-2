@@ -1,7 +1,7 @@
-import {getPhotosData} from './data.js';
+//import {getPhotosData} from './data.js';
 
-function thumbnailsRendering () {
-  const photosData = getPhotosData();
+function thumbnailsRendering (photosData) {
+  //const photosData = getPhotosData();
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
@@ -22,4 +22,5 @@ function thumbnailsRendering () {
 
   picturesContainer.append(picturesFragment);
 }
-thumbnailsRendering ();
+
+export {thumbnailsRendering};
