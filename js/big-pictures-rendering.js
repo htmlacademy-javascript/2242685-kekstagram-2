@@ -1,30 +1,34 @@
-const picturesContainer = document.querySelector('.pictures');
-const bigPicture = document.querySelector('.big-picture');
-const bigPictureImg = document.querySelector('.big-picture__img').querySelector('img');
-const likesCount = document.querySelector('.likes-count');
-//const socialCommentShownCount = document.querySelector('.social__comment-shown-count');
-const socialCommentTotalCount =  document.querySelector('.social__comment-total-count');
+//const picturesContainer = document.querySelector('.pictures');
+function onThumbnailClick (evt) {
+  {/* <a href="#" class="picture">
+  <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
+  <p class="picture__info">
+    <span class="picture__comments"></span>
+    <span class="picture__likes"></span>
+  </p>
+  </a> */}
+  //console.log(evt.target);
+  if (evt.target.matches('.picture__img')) { //если клик на миниатюре
+    const thumbnailImg = evt.target;
+    const thumbnail = thumbnailImg.closest('.picture'); //родительский элемент (миниатюра)
+    const pictureCommentsCount = thumbnail.querySelector('.picture__comments');
+    const pictureLikes = thumbnail.querySelector('.picture__likes');
 
-//обработчик клика на миниатюре
-{/* <a href="#" class="picture">
-<img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
-<p class="picture__info">
-  <span class="picture__comments"></span>
-  <span class="picture__likes"></span>
-</p>
-</a> */}
+    const bigPicture = document.querySelector('.big-picture');
+    const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
+    const likesCount = bigPicture.querySelector('.likes-count');
+    //const socialCommentShownCount = document.querySelector('.social__comment-shown-count');
+    const socialCommentTotalCount = bigPicture.querySelector('.social__comment-total-count');
+    const socialCaption = bigPicture.querySelector('.social__caption');
 
-function onThumbnailClick(evt) {
-  if (evt.target.matches('.picture')) { //если клик на миниатюре
-    //selectedCategoryContainer.textContent = evt.target.value;
-    bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии
+    bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии (может в конец?)
+
     //наполнение окна
-    const pictureImg = evt.target.querySelector('img');
-    bigPictureImg.src = pictureImg.src;
-    const pictureLikes = evt.target.querySelector('.picture__likes');
+    bigPictureImg.src = thumbnailImg.src;
+    bigPictureImg.alt = thumbnailImg.alt;
+    socialCaption.textContent = thumbnailImg.alt;
     likesCount.textContent = pictureLikes.textContent;
     //socialCommentShownCount.textContent =
-    const pictureCommentsCount = evt.target.querySelector('.picture__likes');
     socialCommentTotalCount.textContent = pictureCommentsCount.textContent;
 
     //обработчики для элементов модального окна
@@ -32,4 +36,5 @@ function onThumbnailClick(evt) {
   }
 }
 
-picturesContainer.addEventListener('click', onThumbnailClick);
+//picturesContainer.addEventListener('click', onThumbnailClick);
+export {onThumbnailClick};
