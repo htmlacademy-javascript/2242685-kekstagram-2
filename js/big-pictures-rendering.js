@@ -5,8 +5,6 @@ const likesCount = document.querySelector('.likes-count');
 //const socialCommentShownCount = document.querySelector('.social__comment-shown-count');
 const socialCommentTotalCount =  document.querySelector('.social__comment-total-count');
 
-
-
 //обработчик клика на миниатюре
 {/* <a href="#" class="picture">
 <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
