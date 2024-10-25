@@ -1,18 +1,13 @@
-//const picturesContainer = document.querySelector('.pictures');
-function onThumbnailClick (evt) {
-  {/* <a href="#" class="picture">
-  <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
-  <p class="picture__info">
-    <span class="picture__comments"></span>
-    <span class="picture__likes"></span>
-  </p>
-  </a> */}
-  //console.log(evt.target);
+
+function onThumbnailClick (evt, photosData) {
+
   if (evt.target.matches('.picture__img')) { //если клик на миниатюре
-    const thumbnailImg = evt.target;
-    const thumbnail = thumbnailImg.closest('.picture'); //родительский элемент (миниатюра)
-    const pictureCommentsCount = thumbnail.querySelector('.picture__comments');
-    const pictureLikes = thumbnail.querySelector('.picture__likes');
+    const pictureImg = evt.target;
+//    console.log(pictureImg);
+    const pictureLink = pictureImg.closest('.picture'); //родительский элемент (ссылка)
+    const pictureCommentsCount = pictureLink.querySelector('.picture__comments');
+    const pictureLikes = pictureLink.querySelector('.picture__likes');
+    const photoId = pictureLink.id;
 
     const bigPicture = document.querySelector('.big-picture');
     const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
@@ -24,12 +19,49 @@ function onThumbnailClick (evt) {
     bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии (может в конец?)
 
     //наполнение окна
-    bigPictureImg.src = thumbnailImg.src;
-    bigPictureImg.alt = thumbnailImg.alt;
-    socialCaption.textContent = thumbnailImg.alt;
+    bigPictureImg.src = pictureImg.src;
+    bigPictureImg.alt = pictureImg.alt;
+    socialCaption.textContent = pictureImg.alt;
     likesCount.textContent = pictureLikes.textContent;
     //socialCommentShownCount.textContent =
     socialCommentTotalCount.textContent = pictureCommentsCount.textContent;
+
+    //блок комментариев
+    // <li class="social__comment">
+    //   <img
+    //     class="social__picture"
+    //     src="{{аватар}}"
+    //     alt="{{имя комментатора}}"
+    //     width="35" height="35">
+    //   <p class="social__text">{{текст комментария}}</p>
+    // </li>
+
+    //photosData[photoId] - соответствующий фотографии элемент массива
+    //.social__comments - родительский класс
+    const socialComments = bigPicture.querySelector('.social__comments');
+    socialComments.replaceChildren(); //удаляем все комментарии
+    const commentsFragment = document.createDocumentFragment();
+    console.log(photosData[photoId].comments);
+    photosData[photoId].comments.forEach((comment) => {
+
+      const socialComment = document.createElement('li');
+      socialComment.classList.add('social__comment');
+      //console.log(comment);
+      const socialPicture = document.createElement('img');
+      socialPicture.classList.add('social__picture');
+      socialPicture.src = comment.avatar;
+      socialPicture.alt = comment.name;
+      socialPicture.style.width = "35";
+      socialPicture.style.height = "35";
+
+      const socialText = document.createElement('p');
+      socialText.classList.add('social__text');
+      socialText.textContent = comment.message;
+
+      socialComment.append(socialPicture, socialText);
+      socialComments.append(socialComment);
+    })
+    commentsFragment.append(socialComments);
 
     //обработчики для элементов модального окна
 

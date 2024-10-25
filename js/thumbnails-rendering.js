@@ -8,7 +8,9 @@ function thumbnailsRendering (photosData) {
 
   for (let i = 0; i < photosData.length; i++) {
     const pictureElement = pictureTemplate.cloneNode(true);
-
+    //console.log(photosData[i].id);
+    const pictureLink = pictureElement.querySelector('.picture'); //ссылка (тег <a ...)
+    pictureLink.id = photosData[i].id;
     const pictureImg = pictureElement.querySelector('img');
     pictureImg.src = photosData[i].url;
     pictureImg.alt = photosData[i].description;
