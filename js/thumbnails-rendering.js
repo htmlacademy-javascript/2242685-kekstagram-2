@@ -1,14 +1,11 @@
-//import {getPhotosData} from './data.js';
 
 function thumbnailsRendering (photosData) {
-  //const photosData = getPhotosData();
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
 
   for (let i = 0; i < photosData.length; i++) {
     const pictureElement = pictureTemplate.cloneNode(true);
-    //console.log(photosData[i].id);
     const pictureLink = pictureElement.querySelector('.picture'); //ссылка (тег <a ...)
     pictureLink.id = photosData[i].id;
     const pictureImg = pictureElement.querySelector('img');
