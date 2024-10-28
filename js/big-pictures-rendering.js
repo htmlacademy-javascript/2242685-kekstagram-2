@@ -13,10 +13,10 @@ function onDocumentKeydown (evt) {
     evt.preventDefault();
     closeBigPictureModal();
   }
-};
+}
 
 function bigPicturesRendering (photosDataArray) {
-  document.querySelector('.pictures').addEventListener("click", (evt) => {
+  document.querySelector('.pictures').addEventListener('click', (evt) => {
     if (evt.target.matches('.picture__img')) { //если клик на миниатюре
       const pictureImg = evt.target;
       const pictureLink = pictureImg.closest('.picture'); //родительский элемент (ссылка)
@@ -51,8 +51,8 @@ function bigPicturesRendering (photosDataArray) {
         socialPicture.classList.add('social__picture');
         socialPicture.src = comment.avatar;
         socialPicture.alt = comment.name;
-        socialPicture.style.width = "35";
-        socialPicture.style.height = "35";
+        socialPicture.style.width = '35';
+        socialPicture.style.height = '35';
 
         const socialText = document.createElement('p');
         socialText.classList.add('social__text');
@@ -60,7 +60,7 @@ function bigPicturesRendering (photosDataArray) {
 
         socialComment.append(socialPicture, socialText);
         commentsFragment.append(socialComment);
-      })
+      });
       socialComments.append(commentsFragment);
 
       bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии (может в конец?)
@@ -75,7 +75,7 @@ function bigPicturesRendering (photosDataArray) {
 
       document.addEventListener('keydown', onDocumentKeydown);
     }
-  })
+  });
 }
 
 export {bigPicturesRendering};
