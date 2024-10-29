@@ -82,9 +82,9 @@ function getComments () {
 }
 
 function getPhotosData() {
-  const photosData = [];
+  const photosDataArray = [];
   for (let i = 1; i <= NUMBER_OF_PHOTOS; i++) {
-    photosData[i - 1] = {
+    photosDataArray[i - 1] = {
       id: i, // уникальный идентификатор фотографии (от 1 до NUMBER_OF_PHOTOS)
       url: `photos/${i}.jpg`, // адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
       description: PHOTOS_DESCRIPTIONS[i - 1],
@@ -92,7 +92,7 @@ function getPhotosData() {
       comments: getComments(),
     };
   }
-  return photosData;
+  return photosDataArray;
 }
 
 export {getPhotosData};

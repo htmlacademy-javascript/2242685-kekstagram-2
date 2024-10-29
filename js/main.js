@@ -1,3 +1,9 @@
 import {getPhotosData} from './data.js';
+import {thumbnailsRendering} from './thumbnails-rendering.js';
+import {bigPicturesRendering} from './big-pictures-rendering.js';
 
-getPhotosData();
+const photosData = getPhotosData();
+
+thumbnailsRendering(photosData);
+
+bigPicturesRendering(photosData);
