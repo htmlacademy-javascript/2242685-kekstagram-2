@@ -15,6 +15,8 @@ function closeBigPictureModal () {
   document.querySelector('body').classList.remove('modal-open');
   commentsLoaded = 0;
   commentsCount = 0;
+  //удалить обработчик Escape!
+  document.removeEventListener('keydown', onDocumentKeydown);
 }
 
 function onDocumentKeydown (evt) {
@@ -62,7 +64,7 @@ function bigPicturesRendering (photosDataArray) {
       bigPictureCancel.addEventListener('click', closeBigPictureModal);
       document.addEventListener('keydown', onDocumentKeydown);
       appendComments(); //загружаем первую порцию комментариев
-      bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии (может в конец?)
+      bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии
     }
   });
 }
