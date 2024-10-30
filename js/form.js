@@ -1,11 +1,12 @@
-const percentsMin = 25;
-const percentsMax = 100;
-const percentsStep = 25;
+const scalePercentsMin = 25;
+const scalePercentsMax = 100;
+const scalePercentsStep = 25;
 const imgUploadInput = document.querySelector('.img-upload__input');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const bodyElement = document.querySelector('body');
 const scaleControlValue = document.querySelector('.scale__control--value');
-let scaleControlValueInPercents = Number(scaleControlValue.value.replace('%',''));
+//let scaleControlValueInPercents = Number(scaleControlValue.value.replace('%',''));
+let scaleControlValueInPercents = 100;
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const imgUploadPreviewImg = document.querySelector('.img-upload__preview').querySelector('img');
@@ -15,12 +16,9 @@ const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectsList = document.querySelector('.effects__list');
 let effectValue = '';
 let effectData = {};
-// Для эффекта «Хром» — filter: grayscale(0..1) с шагом 0.1;
-// Для эффекта «Сепия» — filter: sepia(0..1) с шагом 0.1;
-// Для эффекта «Марвин» — filter: invert(0..100%) с шагом 1%;
-// Для эффекта «Фобос» — filter: blur(0..3px) с шагом 0.1px;
-// Для эффекта «Зной» — filter: brightness(1..3) с шагом 0.1;
-// Для эффекта «Оригинал» CSS-стили filter удаляются.
+const imgUploadCancel = document.querySelector('.img-upload__cancel');
+const imgUploadForm = document.querySelector('.img-upload__form');
+
 const effectsArray = [
   {value: 'none', filter: ''},
   {value: 'chrome', filter: 'grayscale', unit: '', min: 0, max: 1, step: 0.1},
@@ -30,16 +28,64 @@ const effectsArray = [
   {value: 'heat', filter: 'brightness', unit: '', min: 1, max: 3, step: 0.1}
 ];
 
-function onSelectImg() {
+const pristine = new Pristine(imgUploadForm, {
+  // определить классы
+  // classTo: 'setup-wizard-form__element',
+  // errorTextParent: 'setup-wizard-form__element',
+  // errorTextClass: 'setup-wizard-form__error-text',
+
+});
+
+function onSelectPicture () {
+  scaleControlSmaller.addEventListener('click', onScaleControl);
+  scaleControlBigger.addEventListener('click', onScaleControl);
+  //console.log(imgUploadInput.value);
+
+  //создание слайдера
+  noUiSlider.create(effectLevelSlider, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 1, //100%
+    step: 0.1,
+    connect: 'lower',
+  });
+  effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
+
+  setOriginalPicture();
+
+  effectsList.addEventListener('click', onEffectsList);
+  document.addEventListener('keydown', onDocumentKeydown);
+  imgUploadCancel.addEventListener('click', closeForm);
+
+  imgUploadForm.addEventListener('submit', pristineValidate);
+  pristine.addValidator(imgUploadForm.querySelector('.text__hashtags'), validateHashtags, 'Хэштег неверный!');
+  pristine.addValidator(imgUploadForm.querySelector('.text__description'), validateDescription, 'Комментарий неверный!');
+
   imgUploadOverlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
 }
 
+function validateHashtags (value) {
+  //return value.length >= 2 && value.length <= 50;
+}
+
+function validateDescription (value) {
+  //...
+}
+
+function pristineValidate (evt) {
+  evt.preventDefault();
+  //...
+  return pristine.validate();
+}
+
 function onScaleControl (evt) {
   if (evt.target.matches('.scale__control--smaller')) {
-    scaleControlValueInPercents = Math.max(percentsMin, scaleControlValueInPercents - percentsStep);
+    scaleControlValueInPercents = Math.max(scalePercentsMin, scaleControlValueInPercents - scalePercentsStep);
   } else {
-    scaleControlValueInPercents = Math.min(percentsMax, scaleControlValueInPercents + percentsStep);
+    scaleControlValueInPercents = Math.min(scalePercentsMax, scaleControlValueInPercents + scalePercentsStep);
   }
   scaleControlValue.value = `${scaleControlValueInPercents}%`;
   imgUploadPreviewImg.style.transform = `scale(${scaleControlValueInPercents / 100})`;
@@ -79,26 +125,27 @@ function onEffectsList (evt) {
   }
 }
 
+function closeForm () {
+  imgUploadOverlay.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
+  //сбросить значение img-upload__input
+  //imgUploadInput.removeEventListener('change', onSelectImg);
+  imgUploadInput.value = '';
+  document.removeEventListener('keydown', onDocumentKeydown);
+  effectLevelSlider.noUiSlider.destroy();
+  imgUploadPreviewImg.style.transform = 'scale(1)';
+  scaleControlValueInPercents = 100;
+}
+
+function onDocumentKeydown (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeForm();
+  }
+}
+
 function loadingPictureForm () {
-  imgUploadInput.addEventListener('change', onSelectImg);
-  scaleControlSmaller.addEventListener('click', onScaleControl);
-  scaleControlBigger.addEventListener('click', onScaleControl);
-
-  //создание слайдера
-  noUiSlider.create(effectLevelSlider, {
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 1, //100%
-    step: 0.1,
-    connect: 'lower',
-  });
-  effectLevelSlider.noUiSlider.on('update', onSliderUpdate);
-  setOriginalPicture();
-
-  effectsList.addEventListener('click', onEffectsList);
-
+  imgUploadInput.addEventListener('change', onSelectPicture);
 }
 
 export{loadingPictureForm};
