@@ -5,7 +5,6 @@ const imgUploadInput = document.querySelector('.img-upload__input');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const bodyElement = document.querySelector('body');
 const scaleControlValue = document.querySelector('.scale__control--value');
-//let scaleControlValueInPercents = Number(scaleControlValue.value.replace('%',''));
 let scaleControlValueInPercents = 100;
 const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
@@ -18,6 +17,7 @@ let effectValue = '';
 let effectData = {};
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const imgUploadForm = document.querySelector('.img-upload__form');
+const hashtagRegex = /^#[a-zа-яё0-9]{1,19}$/;
 
 const effectsArray = [
   {value: 'none', filter: ''},
@@ -29,17 +29,21 @@ const effectsArray = [
 ];
 
 const pristine = new Pristine(imgUploadForm, {
-  // определить классы
-  // classTo: 'setup-wizard-form__element',
-  // errorTextParent: 'setup-wizard-form__element',
-  // errorTextClass: 'setup-wizard-form__error-text',
-
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextTag: 'div',
+  errorTextClass: 'img-upload__field-wrapper--error'
 });
+
+const textHashtags = imgUploadForm.querySelector('.text__hashtags');
+let messageOnHashtagError = 'Некорректный хэштег';
+const textDescription = imgUploadForm.querySelector('.text__description');
+let messageOnDescriptionError = 'Максимальная длина комментария - 140 символов';
+
 
 function onSelectPicture () {
   scaleControlSmaller.addEventListener('click', onScaleControl);
   scaleControlBigger.addEventListener('click', onScaleControl);
-  //console.log(imgUploadInput.value);
 
   //создание слайдера
   noUiSlider.create(effectLevelSlider, {
@@ -58,27 +62,61 @@ function onSelectPicture () {
   effectsList.addEventListener('click', onEffectsList);
   document.addEventListener('keydown', onDocumentKeydown);
   imgUploadCancel.addEventListener('click', closeForm);
-
+  //pristine
   imgUploadForm.addEventListener('submit', pristineValidate);
-  pristine.addValidator(imgUploadForm.querySelector('.text__hashtags'), validateHashtags, 'Хэштег неверный!');
-  pristine.addValidator(imgUploadForm.querySelector('.text__description'), validateDescription, 'Комментарий неверный!');
+  pristine.addValidator(textHashtags, validateHashtags, messageOnHashtagError);
+  pristine.addValidator(textDescription, validateDescription, messageOnDescriptionError);
 
   imgUploadOverlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
 }
 
 function validateHashtags (value) {
-  //return value.length >= 2 && value.length <= 50;
+  const hashtagsArray = value.trim().toLowerCase().split(' ');
+  let isCorrectHashtag = true;
+  // хэштег начинается с символа # (решётка)
+  //строка после решётки должна состоять из букв и чисел
+  // хеш-тег не может состоять только из одной решётки
+  // максимальная длина одного хэштега 20 символов, включая решётку
+  // хэштеги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом
+  // хэштеги разделяются пробелами
+  hashtagsArray.forEach((hashtag) => {
+    if (!hashtagRegex.test(hashtag)) {
+      isCorrectHashtag = false;
+    }
+  });
+  if (!isCorrectHashtag) {
+    // messageOnHashtagError = 'хэштег должен начинаться с символа # (решётка) и состоять из букв и цифр без пробелов; ' +
+    //   'максимальная длина одного хэштега 20 символов, включая решётку; ' +
+    //   'хэштеги разделяются пробелами';
+    return false;
+  }
+  // один и тот же хэштег не может быть использован дважды
+  if (hashtagsArray.length !== Array.from(new Set(hashtagsArray)).length) {
+    isCorrectHashtag = false;
+  }
+  if (!isCorrectHashtag) {
+  // messageOnHashtagError = 'хэштэги не должны повторяться';
+    return false;
+  }
+  // нельзя указать больше пяти хэштегов
+  if (hashtagsArray.length > 5) {
+    isCorrectHashtag = false;
+  }
+  if (!isCorrectHashtag) {
+  // messageOnHashtagError = 'нельзя задать больше 5 хэштэгов';
+    return false;
+  }
+  return true;
 }
 
 function validateDescription (value) {
-  //...
+  return value.length <= 140;
 }
 
 function pristineValidate (evt) {
   evt.preventDefault();
-  //...
-  return pristine.validate();
+  pristine.validate();
 }
 
 function onScaleControl (evt) {
@@ -129,16 +167,20 @@ function closeForm () {
   imgUploadOverlay.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   //сбросить значение img-upload__input
-  //imgUploadInput.removeEventListener('change', onSelectImg);
   imgUploadInput.value = '';
   document.removeEventListener('keydown', onDocumentKeydown);
   effectLevelSlider.noUiSlider.destroy();
   imgUploadPreviewImg.style.transform = 'scale(1)';
   scaleControlValueInPercents = 100;
+  messageOnHashtagError = null;
+  messageOnDescriptionError = null;
+  //pristine.destroy();
+  //pristine.reset();
+  imgUploadForm.reset();
 }
 
 function onDocumentKeydown (evt) {
-  if (evt.key === 'Escape') {
+  if (evt.key === 'Escape' && document.activeElement !== textHashtags && document.activeElement !== textDescription) {
     evt.preventDefault();
     closeForm();
   }
