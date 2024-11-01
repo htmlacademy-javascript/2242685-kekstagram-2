@@ -1,5 +1,5 @@
 import {onScaleControl, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue} from './form-picture.js';
-import {pristineAddValidators, pristine, resetHashtagErrorMessages} from './form-texts.js';
+import {createPristine, pristine, pristineAddValidators} from './form-texts.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -27,6 +27,7 @@ function onSelectPicture () {
   document.addEventListener('keydown', onDocumentKeydown);
   imgUploadCancel.addEventListener('click', closeForm);
   //pristine
+  createPristine();
   imgUploadForm.addEventListener('submit', pristineValidate);
   pristineAddValidators();
 
@@ -48,9 +49,7 @@ function closeForm () {
   effectLevelSlider.noUiSlider.destroy();
   imgUploadPreviewImg.style.transform = 'scale(1)';
   resetScaleControlValue();
-  resetHashtagErrorMessages();
-  //pristine.destroy();
-  //pristine.reset();
+  pristine.destroy();
   imgUploadForm.reset();
 }
 

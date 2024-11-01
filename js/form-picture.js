@@ -18,7 +18,6 @@ const effectsArray = [
   {value: 'heat', filter: 'brightness', unit: '', min: 1, max: 3, step: 0.1}
 ];
 
-
 function onScaleControl (evt) {
   if (evt.target.matches('.scale__control--smaller')) {
     scaleControlValueInPercents = Math.max(scalePercentsMin, scaleControlValueInPercents - scalePercentsStep);
@@ -44,7 +43,6 @@ function createSlider () {
     step: 0.1,
     connect: 'lower',
   });
-
 }
 
 function setOriginalPicture () {
@@ -61,7 +59,6 @@ function onEffectsList (evt) {
     setOriginalPicture();
   } else {
     effectData = effectsArray.find((item) => item.value === effectValue); //поиск в массиве объектов
-    //imgUploadPreviewImg.style.filter = `${effectData.filter}(${effectData.max}${effectData.unit})`;
     effectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: effectData.min,
