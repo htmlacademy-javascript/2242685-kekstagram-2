@@ -1,3 +1,4 @@
+const LOADING_COMMENTS_COUNT = 5; // количество загружаемых за раз комментариев
 
 const bigPicture = document.querySelector('.big-picture');
 const socialComments = bigPicture.querySelector('.social__comments');
@@ -6,7 +7,7 @@ const commentsLoader = bigPicture.querySelector('.comments-loader'); //кноп�
 let photoId = 1;
 let commentsCount = 0;
 let commentsLoaded = 0;
-let commentsArray = [];
+let comments = [];
 
 function closeBigPictureModal () {
   bigPicture.classList.add('hidden');
@@ -26,7 +27,7 @@ function onDocumentKeydown (evt) {
   }
 }
 
-function bigPicturesRendering (photosDataArray) {
+function bigPicturesRendering (photosData) {
   document.querySelector('.pictures').addEventListener('click', (evt) => {
     if (evt.target.matches('.picture__img')) { //если клик на миниатюре
       document.querySelector('body').classList.add('modal-open');
@@ -49,15 +50,12 @@ function bigPicturesRendering (photosDataArray) {
       socialCommentTotalCount.textContent = pictureCommentsCount.textContent;
 
       //блок комментариев
-      //photosDataArray[photoId - 1] - соответствующий фотографии элемент массива
+      //photosData[photoId - 1] - соответствующий фотографии элемент массива
       //.social__comments - родительский класс
       socialComments.replaceChildren(); //удаляем все комментарии
-      commentsArray = photosDataArray[photoId - 1].comments;
-      commentsCount = commentsArray.length;
+      comments = photosData[photoId - 1].comments;
+      commentsCount = comments.length;
       commentsLoader.addEventListener('click', appendComments);
-
-      // bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-      // bigPicture.querySelector('.comments-loader').classList.add('hidden');
 
       //обработчики для кнопки закрытия модального окна
       const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); //кнопка закрытия окна
@@ -72,10 +70,10 @@ function bigPicturesRendering (photosDataArray) {
 function appendComments () {
   const commentsFragment = document.createDocumentFragment();
   const initialNumber = commentsLoaded + 1;
-  const finalNumber = Math.min(commentsLoaded + 5, commentsCount);
+  const finalNumber = Math.min(commentsLoaded + LOADING_COMMENTS_COUNT, commentsCount);
   for (let i = initialNumber; i <= finalNumber; i++) {
     commentsLoaded++;
-    const comment = commentsArray[i - 1];
+    const comment = comments[i - 1];
     const socialComment = document.createElement('li');
     socialComment.classList.add('social__comment');
     const socialPicture = document.createElement('img');
