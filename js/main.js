@@ -1,14 +1,15 @@
 // import {getPhotosData} from './data.js';
-import {thumbnailsRendering} from './thumbnails-rendering.js';
-import {bigPicturesRendering} from './big-pictures-rendering.js';
+// import {thumbnailsRendering} from './thumbnails-rendering.js';
+// import {bigPicturesRendering} from './big-pictures-rendering.js';
 import {loadingPictureForm} from './form.js';
 import {fetchPhotosData} from './fetch.js';
 
+fetchPhotosData();
+
 // const photosData = getPhotosData();
-const photosData = fetchPhotosData();
 
-thumbnailsRendering(photosData);
+// thumbnailsRendering(photosData);
 
-bigPicturesRendering(photosData);
+// bigPicturesRendering(photosData);
 
 loadingPictureForm();

@@ -4,37 +4,18 @@
 // Разметку сообщения, которая находится в блоке #data-error внутри шаблона template, нужно разместить перед закрывающим тегом </body>.
 //Сообщение удаляется со страницы через 5 секунд.
 
-async function fetchPhotosData () {
-  //let photosData = [];
-  // fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
-  // .then((response) => response.json())
-  // .then((data) => ...)
+import {thumbnailsRendering} from './thumbnails-rendering.js';
+import {bigPicturesRendering} from './big-pictures-rendering.js';
+
+const URL = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
+
+function fetchPhotosData () {
+  fetch(URL)
+    .then((response) => response.json())
+    .then((data) => {
+      thumbnailsRendering(data);
+      bigPicturesRendering(data);
+  });
 }
-
-// async function getData(url) {
-//   const response = await fetch(url);
-//   return await response.json();
-// }
-
-// function myfunc() {
-//   results = [];
-//   return fetch(URL)
-//     .then((response) => response.json())
-//     .then((hitsJSON) => {
-//       return hitsJSON.hits.map(item => {
-//         return {
-//               id: item.id,
-//               url: item.previewURL,
-//               tags: item.tags
-//           };
-//       }));
-//   });
-//  }
-
-// // и использование
-// myfunc()
-//   .then((results) => {
-//     // do something
-//   })
 
 export {fetchPhotosData};
