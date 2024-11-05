@@ -69,22 +69,22 @@ function getMessage () { // одно или два случайных предл
 
 function getComments () {
   const commentsCount = getRandomInteger (0, 30); // Количество комментариев к каждой фотографии — случайное число от 0 до 30.
-  const commentsArray = [];
+  const comments = [];
   for (let j = 0; j <= commentsCount - 1; j++) {
-    commentsArray[j] = {
+    comments[j] = {
       id: j + 1, // любое число. Идентификаторы не должны повторяться.
       avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`, // img/avatar-{{случайное число от 1 до 6}}.svg
       message: getMessage(),
       name: NAMES[getRandomInteger(0, NAMES.length - 1)],
     };
   }
-  return commentsArray;
+  return comments;
 }
 
 function getPhotosData() {
-  const photosDataArray = [];
+  const photosData = [];
   for (let i = 1; i <= NUMBER_OF_PHOTOS; i++) {
-    photosDataArray[i - 1] = {
+    photosData[i - 1] = {
       id: i, // уникальный идентификатор фотографии (от 1 до NUMBER_OF_PHOTOS)
       url: `photos/${i}.jpg`, // адрес картинки вида photos/{{i}}.jpg, где {{i}} — это число от 1 до 25. Адреса картинок не должны повторяться.
       description: PHOTOS_DESCRIPTIONS[i - 1],
@@ -92,7 +92,7 @@ function getPhotosData() {
       comments: getComments(),
     };
   }
-  return photosDataArray;
+  return photosData;
 }
 
 export {getPhotosData};
