@@ -1,5 +1,6 @@
 
 function thumbnailsRendering (photosData) {
+  //console.log(photosData);
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
