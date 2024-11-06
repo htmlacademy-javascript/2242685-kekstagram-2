@@ -2,9 +2,9 @@
 // import {thumbnailsRendering} from './thumbnails-rendering.js';
 // import {bigPicturesRendering} from './big-pictures-rendering.js';
 import {loadingPictureForm} from './form.js';
-import {fetchPhotosData} from './fetch.js';
+import {getPhotosData} from './fetch.js';
 
-fetchPhotosData();
+getPhotosData();
 
 // const photosData = getPhotosData();
 
