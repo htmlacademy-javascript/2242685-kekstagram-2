@@ -9,7 +9,7 @@ const MESSAGE_ON_DESCRIPTION_ERROR = 'Максимальная длина ком
 const MESSAGE_ON_HASHTAGS_CONTENTS_ERROR =
   `хэштег должен начинаться с символа # (решётка) и состоять из букв и цифр без пробелов;
   хэштеги разделяются пробелами`;
-const MESSAGE_ON_HASHTAGS_FIRST_СHARACTER_ERROR = 'хэштег должен начинаться с символа # (решётка)';
+const MESSAGE_ON_HASHTAGS_FIRST_CHARACTER_ERROR = 'хэштег должен начинаться с символа # (решётка)';
 const MESSAGE_ON_HASHTAGS_LENGTH_ERROR = 'максимальная длина одного хэштега 20 символов, включая решётку';
 const MESSAGE_ON_HASHTAGS_REPETITION_ERROR = 'хэштэги не должны повторяться; хэштеги нечувствительны к регистру';
 const MESSAGE_ON_HASHTAGS_QUANTITY_ERROR = 'нельзя указать больше пяти хэштегов';
@@ -34,7 +34,7 @@ function createPristine () {
 }
 
 function pristineAddValidators () {
-  pristine.addValidator(textHashtags, checkHashtagsFirstСharacter, MESSAGE_ON_HASHTAGS_FIRST_СHARACTER_ERROR, 9, true);
+  pristine.addValidator(textHashtags, checkHashtagsFirstCharacter, MESSAGE_ON_HASHTAGS_FIRST_CHARACTER_ERROR, 9, true);
   pristine.addValidator(textHashtags, checkHashtagsOnlyNumberSign, MESSAGE_ON_HASHTAGS_ONLY_NUMBERSIGN_ERROR, 8, true);
   pristine.addValidator(textHashtags, checkHashtagsContents, MESSAGE_ON_HASHTAGS_CONTENTS_ERROR, 7, true);
   pristine.addValidator(textHashtags, checkHashtagsLength, MESSAGE_ON_HASHTAGS_LENGTH_ERROR, 5, true);
@@ -44,7 +44,7 @@ function pristineAddValidators () {
   pristine.addValidator(textDescription, validateDescription, MESSAGE_ON_DESCRIPTION_ERROR);
 }
 
-function checkHashtagsFirstСharacter (value) {
+function checkHashtagsFirstCharacter (value) {
   // присвоение значения переменной isCorrectHashtag и создание массива хэштегов должны находиться в первой по порядку проверке (максимальное значение параметра priority в Pristine)
   isCorrectHashtag = true;
   hashtags = value.trim().toLowerCase().split(/\s+/); // разбиваем на элементы массива, удаляя все, в т.ч. повторяющиеся, пробелы

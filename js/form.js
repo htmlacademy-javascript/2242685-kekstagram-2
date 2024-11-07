@@ -1,5 +1,6 @@
 import {onScaleControl, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue} from './form-picture.js';
 import {createPristine, pristine, pristineAddValidators} from './form-texts.js';
+import {postPhotoData} from './fetch.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = document.querySelector('.img-upload__input');
@@ -24,20 +25,15 @@ function onSelectPicture () {
   setOriginalPicture();
 
   effectsList.addEventListener('click', onEffectsList);
-  document.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onFormKeydown);
   imgUploadCancel.addEventListener('click', closeForm);
-  //pristine
+
   createPristine();
-  imgUploadForm.addEventListener('submit', pristineValidate);
+  imgUploadForm.addEventListener('submit', onFormSubmit);
   pristineAddValidators();
 
   imgUploadOverlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
-}
-
-function pristineValidate (evt) {
-  evt.preventDefault();
-  pristine.validate();
 }
 
 function closeForm () {
@@ -45,7 +41,7 @@ function closeForm () {
   bodyElement.classList.remove('modal-open');
   //сбросить значение img-upload__input
   imgUploadInput.value = '';
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onFormKeydown);
   effectLevelSlider.noUiSlider.destroy();
   imgUploadPreviewImg.style.transform = 'scale(1)';
   resetScaleControlValue();
@@ -53,11 +49,18 @@ function closeForm () {
   imgUploadForm.reset();
 }
 
-function onDocumentKeydown (evt) {
+function onFormKeydown (evt) {
   if (evt.key === 'Escape' && document.activeElement !== imgUploadForm.querySelector('.text__hashtags') && document.activeElement !== imgUploadForm.querySelector('.text__description')) {
     evt.preventDefault();
     closeForm();
   }
 }
 
-export {loadingPictureForm};
+function onFormSubmit (evt) {
+  evt.preventDefault();
+  if (pristine.validate()) {
+    postPhotoData(evt);
+  }
+}
+
+export {loadingPictureForm, closeForm, onFormKeydown};

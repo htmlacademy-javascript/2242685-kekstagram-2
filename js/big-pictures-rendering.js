@@ -50,10 +50,11 @@ function bigPicturesRendering (photosData) {
       socialCommentTotalCount.textContent = pictureCommentsCount.textContent;
 
       //блок комментариев
-      //photosData[photoId - 1] - соответствующий фотографии элемент массива
+      //photosData[photoId( - 1?)] - соответствующий фотографии элемент массива
       //.social__comments - родительский класс
       socialComments.replaceChildren(); //удаляем все комментарии
-      comments = photosData[photoId - 1].comments;
+      // comments = photosData[photoId - 1].comments;
+      comments = photosData[photoId].comments;
       commentsCount = comments.length;
       commentsLoader.addEventListener('click', appendComments);
 
