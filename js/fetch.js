@@ -4,9 +4,10 @@ import {closeForm, onFormKeydown} from './form.js';
 
 const URL_TO_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 const URL_TO_POST = 'https://31.javascript.htmlacademy.pro/kekstagram';
+const SHOW_ERROR_TIME = 5000;
 const bodyElement = document.querySelector('body');
 const submitButton = document.querySelector('#upload-submit');
-const submitButtonText = {
+const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
 };
@@ -40,17 +41,17 @@ function onGetDataError() {
   //Сообщение удаляется со страницы через 5 секунд.
   setTimeout(() => {
     bodyElement.querySelector('.data-error').remove();
-  }, 5000);
+  }, SHOW_ERROR_TIME);
 }
 
 function blockSubmitButton () {
   submitButton.disabled = true;
-  submitButton.textContent = submitButtonText.SENDING;
+  submitButton.textContent = SubmitButtonText.SENDING;
 }
 
 function unblockSubmitButton () {
   submitButton.disabled = false;
-  submitButton.textContent = submitButtonText.IDLE;
+  submitButton.textContent = SubmitButtonText.IDLE;
 }
 
 function postPhotoData(evt) {
@@ -63,6 +64,12 @@ function postPhotoData(evt) {
       body: formData,
     }
   )
+    .then((response) => {
+      if (response.ok) {
+        return; //response.json()
+      }
+      throw new Error(`${response.status} ${response.statusText}`);
+    })
     .then(() => {
       closeForm();
       result = 'success';
@@ -80,6 +87,7 @@ function onPostData() {
   const messageFragment = messageTemplate.cloneNode(true);
   bodyElement.append(messageFragment);
   // удалить обработчик Escape для формы
+  // заменить на stopPropagation()?
   document.removeEventListener('keydown', onFormKeydown);
   document.addEventListener('keydown', onMessageWindowKeydown);
   document.addEventListener('click', onMessageWindowClick);
@@ -92,6 +100,7 @@ function onMessageWindowClick (evt) {
 }
 
 function onMessageWindowKeydown (evt) {
+  //evt.stopPropagation();
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeMessageWindow();
@@ -101,7 +110,8 @@ function onMessageWindowKeydown (evt) {
 function closeMessageWindow () {
   document.removeEventListener('keydown', onMessageWindowKeydown);
   if (result === 'error') {
-    // добавить обработчик Escape для формы
+  // заменить на stopPropagation() (в onPostData ?) и удалить блок с условием
+  // добавить обработчик Escape для формы
     document.addEventListener('keydown', onFormKeydown);
   }
   document.removeEventListener('click', onMessageWindowClick);
