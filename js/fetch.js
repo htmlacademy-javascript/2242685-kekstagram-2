@@ -1,6 +1,7 @@
 import {thumbnailsRendering} from './thumbnails-rendering.js';
 import {bigPicturesRendering} from './big-pictures-rendering.js';
 import {closeForm, onFormKeydown} from './form.js';
+import {showFilters} from './filters.js';
 
 const URL_TO_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 const URL_TO_POST = 'https://31.javascript.htmlacademy.pro/kekstagram';
@@ -14,8 +15,6 @@ const SubmitButtonText = {
 let result = '';
 
 function getPhotosData () {
-  // 4.1. Загрузка изображений от других пользователей производится сразу после открытия страницы
-  // с удалённого сервера: https://31.javascript.htmlacademy.pro/kekstagram/data.
   fetch(URL_TO_GET)
     .then((response) => {
       if (response.ok) {
@@ -24,8 +23,10 @@ function getPhotosData () {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then((data) => {
-      thumbnailsRendering(data);
-      bigPicturesRendering(data);
+      const photosData = data.slice();
+      thumbnailsRendering(photosData);
+      showFilters(photosData);
+      bigPicturesRendering(photosData);
     })
     .catch(() => {
       onGetDataError();
@@ -33,12 +34,9 @@ function getPhotosData () {
 }
 
 function onGetDataError() {
-  // 4.2. Если при загрузке данных с сервера произошла ошибка запроса, нужно показать соответствующее сообщение.
-  // Разметку сообщения, которая находится в блоке #data-error внутри шаблона template, нужно разместить перед закрывающим тегом </body>.
   const dataErrorTemplate = document.querySelector('#data-error').content;
   const dataErrorFragment = dataErrorTemplate.cloneNode(true);
   bodyElement.append(dataErrorFragment);
-  //Сообщение удаляется со страницы через 5 секунд.
   setTimeout(() => {
     bodyElement.querySelector('.data-error').remove();
   }, SHOW_ERROR_TIME);
@@ -66,7 +64,7 @@ function postPhotoData(evt) {
   )
     .then((response) => {
       if (response.ok) {
-        return; //response.json()
+        return;
       }
       throw new Error(`${response.status} ${response.statusText}`);
     })
@@ -100,7 +98,6 @@ function onMessageWindowClick (evt) {
 }
 
 function onMessageWindowKeydown (evt) {
-  //evt.stopPropagation();
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeMessageWindow();

@@ -1,4 +1,4 @@
-import {onScaleControl, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue} from './form-picture.js';
+import {onScaleControlSmaller, onScaleControlBigger, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue} from './form-picture.js';
 import {createPristine, pristine, pristineAddValidators} from './form-texts.js';
 import {postPhotoData} from './fetch.js';
 
@@ -16,8 +16,8 @@ function loadingPictureForm () {
 }
 
 function onSelectPicture () {
-  scaleControlSmaller.addEventListener('click', onScaleControl);
-  scaleControlBigger.addEventListener('click', onScaleControl);
+  scaleControlSmaller.addEventListener('click', onScaleControlSmaller);
+  scaleControlBigger.addEventListener('click', onScaleControlBigger);
 
   createSlider();
   effectLevelSlider.noUiSlider.on('update', onSliderUpdate);

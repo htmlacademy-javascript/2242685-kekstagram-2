@@ -18,12 +18,17 @@ const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level')
 let effectValue = '';
 let effectData = {};
 
-function onScaleControl (evt) {
-  if (evt.target.matches('.scale__control--smaller')) {
-    scaleControlValueInPercents = Math.max(SCALE_PERCENTS_MIN, scaleControlValueInPercents - SCALE_PERCENTS_STEP);
-  } else {
-    scaleControlValueInPercents = Math.min(SCALE_PERCENTS_MAX, scaleControlValueInPercents + SCALE_PERCENTS_STEP);
-  }
+function onScaleControlSmaller () {
+  scaleControlValueInPercents = Math.max(SCALE_PERCENTS_MIN, scaleControlValueInPercents - SCALE_PERCENTS_STEP);
+  setScaleControlValue();
+}
+
+function onScaleControlBigger () {
+  scaleControlValueInPercents = Math.min(SCALE_PERCENTS_MAX, scaleControlValueInPercents + SCALE_PERCENTS_STEP);
+  setScaleControlValue();
+}
+
+function setScaleControlValue () {
   scaleControlValue.value = `${scaleControlValueInPercents}%`;
   imgUploadPreviewImg.style.transform = `scale(${scaleControlValueInPercents / 100})`;
 }
@@ -76,4 +81,4 @@ function resetScaleControlValue () {
   scaleControlValueInPercents = 100;
 }
 
-export {onScaleControl, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue};
+export {onScaleControlSmaller, onScaleControlBigger, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue};
