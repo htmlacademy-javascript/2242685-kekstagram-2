@@ -3,9 +3,6 @@ function thumbnailsRendering (photosData) {
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
-
-  //console.log('thumbnailsRendering');
-  console.log(photosData);
   // удаление всех предыдущих фотографий
   document.querySelectorAll('.picture').forEach((element) => element.remove());
 
