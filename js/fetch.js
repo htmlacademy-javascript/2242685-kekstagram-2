@@ -1,5 +1,5 @@
 import {thumbnailsRendering} from './thumbnails-rendering.js';
-import {bigPictureRendering} from './big-pictures-rendering.js';
+import {bigPictureRendering} from './big-picture-rendering.js';
 import {closeForm, onFormKeydown} from './form.js';
 import {showFilters} from './filters.js';
 

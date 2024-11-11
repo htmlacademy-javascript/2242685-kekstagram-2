@@ -2,6 +2,7 @@ import {onScaleControlSmaller, onScaleControlBigger, onSliderUpdate, createSlide
 import {createPristine, pristine, pristineAddValidators} from './form-texts.js';
 import {postPhotoData} from './fetch.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = document.querySelector('.img-upload__input');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -10,12 +11,21 @@ const scaleControlSmaller = document.querySelector('.scale__control--smaller');
 const scaleControlBigger = document.querySelector('.scale__control--bigger');
 const effectsList = document.querySelector('.effects__list');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
+const imgUploadPreview = document.querySelector('.img-upload__preview').querySelector('img');
+const effectsPreviewCollection = effectsList.querySelectorAll('.effects__preview');
 
 function loadingPictureForm () {
   imgUploadInput.addEventListener('change', onSelectPicture);
 }
 
 function onSelectPicture () {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  if (FILE_TYPES.some((it) => fileName.endsWith(it))) {
+    imgUploadPreview.src = URL.createObjectURL(file);
+  }
+  effectsPreviewCollection.forEach((effectPreview) => effectPreview.style.backgroundImage = `url("${imgUploadPreview.src}")`);
+
   scaleControlSmaller.addEventListener('click', onScaleControlSmaller);
   scaleControlBigger.addEventListener('click', onScaleControlBigger);
 
