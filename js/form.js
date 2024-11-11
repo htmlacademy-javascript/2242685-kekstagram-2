@@ -24,7 +24,9 @@ function onSelectPicture () {
   if (FILE_TYPES.some((it) => fileName.endsWith(it))) {
     imgUploadPreview.src = URL.createObjectURL(file);
   }
-  effectsPreviewCollection.forEach((effectPreview) => effectPreview.style.backgroundImage = `url("${imgUploadPreview.src}")`);
+  effectsPreviewCollection.forEach((effectPreview) => {
+    effectPreview.style.backgroundImage = `url("${imgUploadPreview.src}")`;
+  });
 
   scaleControlSmaller.addEventListener('click', onScaleControlSmaller);
   scaleControlBigger.addEventListener('click', onScaleControlBigger);
