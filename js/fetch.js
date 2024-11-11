@@ -1,5 +1,5 @@
 import {thumbnailsRendering} from './thumbnails-rendering.js';
-import {bigPicturesRendering} from './big-pictures-rendering.js';
+import {bigPictureRendering} from './big-pictures-rendering.js';
 import {closeForm, onFormKeydown} from './form.js';
 import {showFilters} from './filters.js';
 
@@ -26,7 +26,7 @@ function getPhotosData () {
       const photosData = data.slice();
       thumbnailsRendering(photosData);
       showFilters(photosData);
-      bigPicturesRendering(photosData);
+      bigPictureRendering(photosData);
     })
     .catch(() => {
       onGetDataError();

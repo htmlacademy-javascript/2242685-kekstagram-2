@@ -27,7 +27,7 @@ function onBigPictureKeydown (evt) {
   }
 }
 
-function bigPicturesRendering (photosData) {
+function bigPictureRendering (photosData) {
   document.querySelector('.pictures').addEventListener('click', (evt) => {
     if (evt.target.matches('.picture__img')) { //если клик на миниатюре
       document.querySelector('body').classList.add('modal-open');
@@ -97,4 +97,4 @@ function appendComments () {
   }
 }
 
-export {bigPicturesRendering};
+export {bigPictureRendering};
