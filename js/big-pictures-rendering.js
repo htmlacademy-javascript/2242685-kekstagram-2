@@ -4,7 +4,7 @@ const bigPicture = document.querySelector('.big-picture');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentShownCount = bigPicture.querySelector('.social__comment-shown-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader'); //кнопка Загрузить ещё
-let photoId = 1;
+let photoId = 0;
 let commentsCount = 0;
 let commentsLoaded = 0;
 let comments = [];
@@ -17,10 +17,10 @@ function closeBigPictureModal () {
   commentsLoaded = 0;
   commentsCount = 0;
   //удалить обработчик Escape!
-  document.removeEventListener('keydown', onDocumentKeydown);
+  document.removeEventListener('keydown', onBigPictureKeydown);
 }
 
-function onDocumentKeydown (evt) {
+function onBigPictureKeydown (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeBigPictureModal();
@@ -50,7 +50,7 @@ function bigPicturesRendering (photosData) {
       socialCommentTotalCount.textContent = pictureCommentsCount.textContent;
 
       //блок комментариев
-      //photosData[photoId( - 1?)] - соответствующий фотографии элемент массива
+      //photosData[photoId] - соответствующий фотографии элемент массива
       //.social__comments - родительский класс
       socialComments.replaceChildren(); //удаляем все комментарии
       // comments = photosData[photoId - 1].comments;
@@ -61,7 +61,7 @@ function bigPicturesRendering (photosData) {
       //обработчики для кнопки закрытия модального окна
       const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel'); //кнопка закрытия окна
       bigPictureCancel.addEventListener('click', closeBigPictureModal);
-      document.addEventListener('keydown', onDocumentKeydown);
+      document.addEventListener('keydown', onBigPictureKeydown);
       appendComments(); //загружаем первую порцию комментариев
       bigPicture.classList.remove('hidden'); //отображаем модальное окно для вывода полноразмерной фотографии
     }
@@ -87,7 +87,6 @@ function appendComments () {
     const socialText = document.createElement('p');
     socialText.classList.add('social__text');
     socialText.textContent = comment.message;
-
     socialComment.append(socialPicture, socialText);
     commentsFragment.append(socialComment);
   }
@@ -96,7 +95,6 @@ function appendComments () {
   if (commentsLoaded === commentsCount) {
     commentsLoader.classList.add('hidden');
   }
-
 }
 
 export {bigPicturesRendering};

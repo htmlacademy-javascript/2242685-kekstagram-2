@@ -3,6 +3,8 @@ function thumbnailsRendering (photosData) {
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
+  // удаление всех предыдущих фотографий
+  document.querySelectorAll('.picture').forEach((element) => element.remove());
 
   for (let i = 0; i < photosData.length; i++) {
     const pictureElement = pictureTemplate.cloneNode(true);

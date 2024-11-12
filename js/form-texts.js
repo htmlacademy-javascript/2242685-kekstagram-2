@@ -1,11 +1,9 @@
-
 // ограничения полей ввода текста (хэштеги и комментарий)
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAGS_QUANTITY = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
 
 // сообщения об ошибках заполнения полей ввода текста
-const MESSAGE_ON_DESCRIPTION_ERROR = 'Максимальная длина комментария - 140 символов';
 const MESSAGE_ON_HASHTAGS_CONTENTS_ERROR =
   `хэштег должен начинаться с символа # (решётка) и состоять из букв и цифр без пробелов;
   хэштеги разделяются пробелами`;
@@ -14,6 +12,7 @@ const MESSAGE_ON_HASHTAGS_LENGTH_ERROR = 'максимальная длина о
 const MESSAGE_ON_HASHTAGS_REPETITION_ERROR = 'хэштэги не должны повторяться; хэштеги нечувствительны к регистру';
 const MESSAGE_ON_HASHTAGS_QUANTITY_ERROR = 'нельзя указать больше пяти хэштегов';
 const MESSAGE_ON_HASHTAGS_ONLY_NUMBERSIGN_ERROR = 'хештег не может состоять только из одной решётки';
+const MESSAGE_ON_DESCRIPTION_ERROR = 'Максимальная длина комментария - 140 символов';
 
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,}$/; // регулярное выражение для проверки хэштега
 
