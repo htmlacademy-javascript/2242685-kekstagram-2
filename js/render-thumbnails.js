@@ -1,5 +1,5 @@
 
-function thumbnailsRendering (photosData) {
+function renderThumbnails (photosData) {
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
@@ -24,4 +24,4 @@ function thumbnailsRendering (photosData) {
   picturesContainer.append(picturesFragment);
 }
 
-export {thumbnailsRendering};
+export {renderThumbnails};

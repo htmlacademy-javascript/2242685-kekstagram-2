@@ -1,5 +1,5 @@
 import {onScaleControlSmaller, onScaleControlBigger, onSliderUpdate, createSlider, effectLevelSlider, setOriginalPicture, onEffectsList, imgUploadPreviewImg, resetScaleControlValue} from './form-picture.js';
-import {createPristine, pristine, pristineAddValidators} from './form-texts.js';
+import {createPristine, pristine, addPristineValidators} from './form-texts.js';
 import {postPhotoData} from './fetch.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
@@ -42,7 +42,7 @@ function onSelectPicture () {
 
   createPristine();
   imgUploadForm.addEventListener('submit', onFormSubmit);
-  pristineAddValidators();
+  addPristineValidators();
 
   imgUploadOverlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');

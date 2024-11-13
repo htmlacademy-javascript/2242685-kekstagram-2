@@ -1,5 +1,4 @@
 const LOADING_COMMENTS_COUNT = 5; // количество загружаемых за раз комментариев
-
 const bigPicture = document.querySelector('.big-picture');
 const socialComments = bigPicture.querySelector('.social__comments');
 const socialCommentShownCount = bigPicture.querySelector('.social__comment-shown-count');
@@ -27,7 +26,7 @@ function onBigPictureKeydown (evt) {
   }
 }
 
-function bigPictureRendering (photosData) {
+function renderBigPicture (photosData) {
   document.querySelector('.pictures').addEventListener('click', (evt) => {
     if (evt.target.matches('.picture__img')) { //если клик на миниатюре
       document.querySelector('body').classList.add('modal-open');
@@ -53,7 +52,6 @@ function bigPictureRendering (photosData) {
       //photosData[photoId] - соответствующий фотографии элемент массива
       //.social__comments - родительский класс
       socialComments.replaceChildren(); //удаляем все комментарии
-      // comments = photosData[photoId - 1].comments;
       comments = photosData[photoId].comments;
       commentsCount = comments.length;
       commentsLoader.addEventListener('click', appendComments);
@@ -97,4 +95,4 @@ function appendComments () {
   }
 }
 
-export {bigPictureRendering};
+export {renderBigPicture};
