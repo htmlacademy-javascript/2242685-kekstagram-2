@@ -1,10 +1,11 @@
-import {thumbnailsRendering} from './thumbnails-rendering.js';
-import {bigPicturesRendering} from './big-pictures-rendering.js';
+import {renderThumbnails} from './render-thumbnails.js';
+import {renderBigPicture} from './render-big-picture.js';
 import {closeForm, onFormKeydown} from './form.js';
 import {showFilters} from './filters.js';
 
-const URL_TO_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
-const URL_TO_POST = 'https://31.javascript.htmlacademy.pro/kekstagram';
+// в ссылках ниже поменял 31 на 32
+const URL_TO_GET = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
+const URL_TO_POST = 'https://32.javascript.htmlacademy.pro/kekstagram';
 const SHOW_ERROR_TIME = 5000;
 const bodyElement = document.querySelector('body');
 const submitButton = document.querySelector('#upload-submit');
@@ -24,9 +25,11 @@ function getPhotosData () {
     })
     .then((data) => {
       const photosData = data.slice();
-      thumbnailsRendering(photosData);
-      showFilters(photosData);
-      bigPicturesRendering(photosData);
+      if (photosData.length > 0) {
+        renderThumbnails(photosData);
+        showFilters(photosData);
+        renderBigPicture(photosData);
+      }
     })
     .catch(() => {
       onGetDataError();
@@ -69,18 +72,19 @@ function postPhotoData(evt) {
       throw new Error(`${response.status} ${response.statusText}`);
     })
     .then(() => {
-      closeForm();
       result = 'success';
-      onPostData();
+      closeForm();
     })
     .catch(() => {
       result = 'error';
-      onPostData();
     })
-    .finally(unblockSubmitButton);
+    .finally(() => {
+      doAfterPostData();
+      unblockSubmitButton();
+    });
 }
 
-function onPostData() {
+function doAfterPostData() {
   const messageTemplate = document.querySelector(`#${result}`).content;
   const messageFragment = messageTemplate.cloneNode(true);
   bodyElement.append(messageFragment);

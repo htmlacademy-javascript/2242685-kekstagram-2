@@ -13,13 +13,12 @@ const MESSAGE_ON_HASHTAGS_REPETITION_ERROR = 'хэштэги не должны �
 const MESSAGE_ON_HASHTAGS_QUANTITY_ERROR = 'нельзя указать больше пяти хэштегов';
 const MESSAGE_ON_HASHTAGS_ONLY_NUMBERSIGN_ERROR = 'хештег не может состоять только из одной решётки';
 const MESSAGE_ON_DESCRIPTION_ERROR = 'Максимальная длина комментария - 140 символов';
-
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,}$/; // регулярное выражение для проверки хэштега
 
-let pristine = {};
 const imgUploadForm = document.querySelector('.img-upload__form');
 const textHashtags = imgUploadForm.querySelector('.text__hashtags');
 const textDescription = imgUploadForm.querySelector('.text__description');
+let pristine = {};
 let hashtags = []; // возможно, нужно обнулять
 let isCorrectHashtag = true; // возможно, нужно обнулять
 
@@ -32,7 +31,7 @@ function createPristine () {
   });
 }
 
-function pristineAddValidators () {
+function addPristineValidators () {
   pristine.addValidator(textHashtags, checkHashtagsFirstCharacter, MESSAGE_ON_HASHTAGS_FIRST_CHARACTER_ERROR, 9, true);
   pristine.addValidator(textHashtags, checkHashtagsOnlyNumberSign, MESSAGE_ON_HASHTAGS_ONLY_NUMBERSIGN_ERROR, 8, true);
   pristine.addValidator(textHashtags, checkHashtagsContents, MESSAGE_ON_HASHTAGS_CONTENTS_ERROR, 7, true);
@@ -44,7 +43,7 @@ function pristineAddValidators () {
 }
 
 function checkHashtagsFirstCharacter (value) {
-  // присвоение значения переменной isCorrectHashtag и создание массива хэштегов должны находиться в первой по порядку проверке (максимальное значение параметра priority в Pristine)
+  // присвоение значения переменной isCorrectHashtag и создание массива хэштегов должны выполняться в первой по порядку проверке (максимальное значение параметра priority в Pristine)
   isCorrectHashtag = true;
   hashtags = value.trim().toLowerCase().split(/\s+/); // разбиваем на элементы массива, удаляя все, в т.ч. повторяющиеся, пробелы
   // хэштег начинается с символа # (решётка)
@@ -106,4 +105,4 @@ function validateDescription (value) {
   return value.length <= MAX_DESCRIPTION_LENGTH;
 }
 
-export {createPristine, pristine, pristineAddValidators};
+export {createPristine, pristine, addPristineValidators};

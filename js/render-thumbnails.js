@@ -1,27 +1,27 @@
 
-function thumbnailsRendering (photosData) {
+function renderThumbnails (photosData) {
   const picturesContainer = document.querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture').content;
   const picturesFragment = document.createDocumentFragment();
   // удаление всех предыдущих фотографий
-  document.querySelectorAll('.picture').forEach((element) => element.remove());
+  picturesContainer.querySelectorAll('.picture').forEach((element) => element.remove());
 
-  for (let i = 0; i < photosData.length; i++) {
+  photosData.forEach((photoData) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     const pictureLink = pictureElement.querySelector('.picture'); //ссылка (тег <a ...)
-    pictureLink.id = photosData[i].id;
+    pictureLink.id = photoData.id;
     const pictureImg = pictureElement.querySelector('img');
-    pictureImg.src = photosData[i].url;
-    pictureImg.alt = photosData[i].description;
+    pictureImg.src = photoData.url;
+    pictureImg.alt = photoData.description;
     const pictureComments = pictureElement.querySelector('.picture__comments');
-    pictureComments.textContent = photosData[i].comments.length;
+    pictureComments.textContent = photoData.comments.length;
     const pictureLikes = pictureElement.querySelector('.picture__likes');
-    pictureLikes.textContent = photosData[i].likes;
+    pictureLikes.textContent = photoData.likes;
 
     picturesFragment.append(pictureElement);
-  }
+  });
 
   picturesContainer.append(picturesFragment);
 }
 
-export {thumbnailsRendering};
+export {renderThumbnails};

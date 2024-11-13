@@ -1,10 +1,10 @@
-import {thumbnailsRendering} from './thumbnails-rendering.js';
+import {renderThumbnails} from './render-thumbnails.js';
 import {debounce} from './utils.js';
 
 const DISPLAYED_PHOTOS_COUNT = 10;
 const imgFilters = document.querySelector('.img-filters');
 const imgFiltersForm = imgFilters.querySelector('.img-filters__form');
-const debounceRendering = debounce(thumbnailsRendering);
+const debounceRendering = debounce(renderThumbnails);
 
 function showFilters (photosData) {
   imgFilters.classList.remove('img-filters--inactive');

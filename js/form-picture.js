@@ -1,7 +1,7 @@
 const SCALE_PERCENTS_MIN = 25;
 const SCALE_PERCENTS_MAX = 100;
 const SCALE_PERCENTS_STEP = 25;
-const EFFECTS = [
+const Effects = [
   {value: 'none', filter: ''},
   {value: 'chrome', filter: 'grayscale', unit: '', min: 0, max: 1, step: 0.1},
   {value: 'sepia', filter: 'sepia', unit: '', min: 0, max: 1, step: 0.1},
@@ -10,11 +10,11 @@ const EFFECTS = [
   {value: 'heat', filter: 'brightness', unit: '', min: 1, max: 3, step: 0.1}
 ];
 const scaleControlValue = document.querySelector('.scale__control--value');
-let scaleControlValueInPercents = 100;
 const imgUploadPreviewImg = document.querySelector('.img-upload__preview').querySelector('img');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const imgUploadEffectLevel = document.querySelector('.img-upload__effect-level'); //контейнер слайдера
+let scaleControlValueInPercents = 100;
 let effectValue = '';
 let effectData = {};
 
@@ -34,20 +34,22 @@ function setScaleControlValue () {
 }
 
 function onSliderUpdate () {
-  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+  effectLevelValue.value = 1 * effectLevelSlider.noUiSlider.get();
   imgUploadPreviewImg.style.filter = `${effectData.filter}(${effectLevelValue.value}${effectData.unit})`;
 }
 
 function createSlider () {
-  noUiSlider.create(effectLevelSlider, {
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 1, //100%
-    step: 0.1,
-    connect: 'lower',
-  });
+  if (!effectLevelSlider.noUiSlider) {
+    noUiSlider.create(effectLevelSlider, {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1, //100%
+      step: 0.1,
+      connect: 'lower',
+    });
+  }
 }
 
 function setOriginalPicture () {
@@ -62,7 +64,7 @@ function onEffectsList (evt) {
   if (effectValue === 'none') {
     setOriginalPicture(); //оригинальное изображение
   } else {
-    effectData = EFFECTS.find((item) => item.value === effectValue); //поиск в массиве объектов
+    effectData = Effects.find((item) => item.value === effectValue); //поиск в массиве объектов
     effectLevelSlider.noUiSlider.updateOptions({
       range: {
         min: effectData.min,
