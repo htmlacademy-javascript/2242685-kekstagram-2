@@ -7,12 +7,12 @@ import {showFilters} from './filters.js';
 const URL_TO_GET = 'https://31.javascript.htmlacademy.pro/kekstagram/data';
 const URL_TO_POST = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const SHOW_ERROR_TIME = 5000;
-const bodyElement = document.querySelector('body');
-const submitButton = document.querySelector('#upload-submit');
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикую...'
 };
+const bodyElement = document.querySelector('body');
+const submitButton = document.querySelector('#upload-submit');
 let result = '';
 
 function getPhotosData () {
